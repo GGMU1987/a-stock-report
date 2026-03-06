@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🇨🇳 A股盘前报告 · 每日更新</title>
+<title>🇨🇳 A股每日报告 · 盘前/盘中/盘后</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -11,41 +11,50 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .hero h1{font-size:36px;font-weight:700;background:linear-gradient(90deg,#f85149,#ffd54f,#f85149);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
 .hero p{color:#8899aa;font-size:15px;margin-bottom:8px}
-.stats-bar{display:flex;justify-content:center;gap:32px;margin:24px 0;flex-wrap:wrap}
+.session-row{display:flex;justify-content:center;gap:16px;margin:24px 0;flex-wrap:wrap}
+.session-btn{display:inline-block;padding:12px 28px;border-radius:30px;
+  text-decoration:none;font-size:15px;font-weight:600}
+.btn-pre{background:rgba(248,81,73,.15);border:1px solid rgba(248,81,73,.3);color:#f85149}
+.btn-mid{background:rgba(255,213,79,.15);border:1px solid rgba(255,213,79,.3);color:#ffd54f}
+.btn-aft{background:rgba(63,185,80,.15);border:1px solid rgba(63,185,80,.3);color:#3fb950}
+.stats-bar{display:flex;justify-content:center;gap:32px;margin:16px 0;flex-wrap:wrap}
 .stat .num{font-size:28px;font-weight:700;color:#f85149;text-align:center}
 .stat .label{font-size:12px;color:#8899aa;margin-top:4px;text-align:center}
-.latest-btn{display:inline-block;margin:16px auto;padding:16px 48px;
-  background:linear-gradient(135deg,#c0392b,#922b21);color:#fff;text-decoration:none;
-  border-radius:50px;font-size:18px;font-weight:600;box-shadow:0 4px 20px rgba(192,57,43,.4)}
 .container{max-width:760px;margin:0 auto;padding:0 20px 60px}
 .section-title{font-size:18px;font-weight:600;color:#f85149;margin:32px 0 16px;
   padding-bottom:8px;border-bottom:1px solid #2d1515}
-.report-list{list-style:none}
-.report-link{display:flex;align-items:center;padding:14px 20px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(248,81,73,.15);
-  border-radius:12px;text-decoration:none;color:#c8d8e8;margin-bottom:10px}
-.report-link:hover{background:rgba(248,81,73,.1);border-color:rgba(248,81,73,.3);color:#fff}
-.date-icon{font-size:20px;margin-right:12px}
-.date-text{font-size:15px;flex:1}
-.arrow{color:#f85149;font-size:18px;margin-left:auto}
 .footer{text-align:center;color:#445566;font-size:13px;margin-top:40px;
   padding-top:24px;border-top:1px solid #2d1515}
 </style></head>
 <body>
 <div class="hero">
   <div class="flag">🇨🇳</div>
-  <h1>A股盘前日报</h1>
-  <p>每个交易日北京时间 09:20 自动更新 · 市场行情 + 情绪 + 选股推荐</p>
-  <div class="stats-bar">
-    <div class="stat"><div class="num">2</div><div class="label">历史报告</div></div>
-    <div class="stat"><div class="num">5000+</div><div class="label">覆盖股票</div></div>
-    <div class="stat"><div class="num">TOP5</div><div class="label">每日推荐</div></div>
+  <h1>A股每日报告</h1>
+  <p>每个交易日自动生成 · 盘前策略 + 盘中跟踪 + 盘后复盘</p>
+  <div class="session-row">
+    <a href="reports/a_premarket_20260306.html" class="session-btn btn-pre">🌅 盘前报告 09:20</a>
+    <a href="reports/a_intraday_20260306.html" class="session-btn btn-mid">☀️ 盘中报告 11:30</a>
+    <a href="reports/a_aftermarket_20260306.html" class="session-btn btn-aft">🌙 盘后报告 15:30</a>
   </div>
-  <a href="reports/a_premarket_20260306.html" class="latest-btn">📊 今日报告 (2026-03-06)</a>
+  <div class="stats-bar">
+    <div class="stat"><div class="num">2</div><div class="label">交易日</div></div>
+    <div class="stat"><div class="num">3×</div><div class="label">每日报告</div></div>
+    <div class="stat"><div class="num">5000+</div><div class="label">覆盖股票</div></div>
+  </div>
 </div>
 <div class="container">
   <div class="section-title">📚 历史报告归档</div>
-  <ul class="report-list"><li><a href="reports/a_premarket_20260306.html" class="report-link"><span class="date-icon">📅</span><span class="date-text">2026-03-06（周五）</span><span style="background:#c0392b;color:#fff;padding:2px 8px;border-radius:10px;font-size:12px;margin-left:8px">最新</span><span class="arrow">→</span></a></li><li><a href="reports/a_premarket_20260302.html" class="report-link"><span class="date-icon">📅</span><span class="date-text">2026-03-02（周一）</span><span class="arrow">→</span></a></li></ul>
+  <ul style="list-style:none"><li style="display:flex;align-items:center;padding:14px 20px;
+          background:rgba(255,255,255,.04);border:1px solid rgba(248,81,73,.15);
+          border-radius:12px;margin-bottom:10px;gap:12px">
+          <span style="font-size:20px">📅</span>
+          <span style="font-size:15px;color:#c8d8e8;flex:1">2026-03-06（周五）</span>
+          <span style="display:flex;gap:8px"><a href="reports/a_premarket_20260306.html" style="color:#58a6ff;text-decoration:none;padding:2px 10px;background:rgba(88,166,255,.1);border-radius:8px;font-size:12px">🌅盘前</a></span></li><li style="display:flex;align-items:center;padding:14px 20px;
+          background:rgba(255,255,255,.04);border:1px solid rgba(248,81,73,.15);
+          border-radius:12px;margin-bottom:10px;gap:12px">
+          <span style="font-size:20px">📅</span>
+          <span style="font-size:15px;color:#c8d8e8;flex:1">2026-03-02（周一）</span>
+          <span style="display:flex;gap:8px"><a href="reports/a_premarket_20260302.html" style="color:#58a6ff;text-decoration:none;padding:2px 10px;background:rgba(88,166,255,.1);border-radius:8px;font-size:12px">🌅盘前</a></span></li></ul>
   <div class="footer">
     <p>数据仅供参考，不构成投资建议 · 股市有风险，投资需谨慎</p>
     <p style="margin-top:8px">Powered by GitHub Pages + a-stock-monitor</p>
