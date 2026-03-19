@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🌙 A股盘后复盘 · 2026-03-19 15:30</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--card:#161b22;--border:#21262d;--text:#e6edf3;--text2:#8b949e;
+  --red:#f85149;--green:#3fb950;--yellow:#d29922;--blue:#58a6ff;--purple:#bc8cff}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+.header{padding:36px 20px;text-align:center;border-bottom:1px solid var(--border)}
+.header .flag{font-size:44px;margin-bottom:10px}
+.header h1{font-size:26px;font-weight:700;
+  background:linear-gradient(90deg,#f85149,#ffd54f,#f85149);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header .subtitle{color:var(--text2);font-size:13px;margin-top:6px}
+.header .update-time{margin-top:10px;display:inline-block;padding:4px 16px;
+  border-radius:20px;font-size:12px}
+.session-badge{display:inline-block;padding:5px 18px;border-radius:20px;
+  font-size:13px;font-weight:600;margin-top:8px}
+.container{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:20px 24px;margin-bottom:20px}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.card-header h2{font-size:16px;font-weight:600}
+.icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-size:14px}
+.icon-red{background:rgba(248,81,73,.15)} .icon-blue{background:rgba(88,166,255,.15)}
+.icon-green{background:rgba(63,185,80,.15)} .icon-yellow{background:rgba(210,153,34,.15)}
+.icon-purple{background:rgba(188,140,255,.15)}
+.up{color:var(--red)} .down{color:var(--green)} .neutral{color:var(--text2)}
+.index-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.index-card{background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:10px;padding:14px}
+.index-name{font-size:12px;color:var(--text2);margin-bottom:4px}
+.index-price{font-size:22px;font-weight:700}
+.index-chg{font-size:13px;margin-top:3px}
+.index-extra{font-size:11px;color:var(--text2);margin-top:4px}
+table.data-table{width:100%;border-collapse:collapse;font-size:13px}
+table.data-table th{background:rgba(88,166,255,.06);padding:9px 12px;
+  text-align:left;font-weight:600;color:var(--text2);font-size:12px}
+table.data-table td{padding:9px 12px;border-bottom:1px solid var(--border)}
+table.data-table tr:last-child td{border-bottom:none}
+table.data-table tr:hover td{background:rgba(88,166,255,.04)}
+.status{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600}
+.status-success{background:rgba(248,81,73,.15);color:#f85149}
+.status-danger{background:rgba(63,185,80,.15);color:#3fb950}
+.status-warning{background:rgba(210,153,34,.15);color:var(--yellow)}
+.status-info{background:rgba(88,166,255,.15);color:#58a6ff}
+.sentiment-grid{display:grid;grid-template-columns:1fr 2fr;gap:20px;align-items:center}
+.sentiment-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat-item{background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:8px;padding:12px}
+.stat-label{font-size:11px;color:var(--text2);margin-bottom:4px}
+.stat-value{font-size:18px;font-weight:700}
+.pick-card{background:rgba(255,255,255,.02);border:1px solid var(--border);
+  border-radius:10px;padding:18px;margin-bottom:14px}
+.pick-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.pick-rank{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.pick-rank-1{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#000}
+.pick-rank-2{background:linear-gradient(135deg,#c0c0c0,#808080);color:#000}
+.pick-rank-3{background:linear-gradient(135deg,#cd7f32,#8b4513);color:#fff}
+.pick-rank-n{background:rgba(88,166,255,.2);color:#58a6ff}
+.pick-name{font-size:16px;font-weight:700}
+.pick-code{font-size:12px;color:var(--text2);margin-top:2px}
+.pick-metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:10px 0}
+.metric-item{background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:6px;padding:8px 12px}
+.metric-label{font-size:11px;color:var(--text2);margin-bottom:3px}
+.metric-value{font-size:14px;font-weight:600}
+.signals-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.signal-tag{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.signal-buy{background:rgba(248,81,73,.15);color:#f85149}
+.signal-sell{background:rgba(63,185,80,.15);color:#3fb950}
+.signal-neutral{background:rgba(88,166,255,.15);color:#58a6ff}
+.targets-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.target-box{background:rgba(255,255,255,.04);border-radius:8px;padding:10px;text-align:center}
+.target-label{font-size:11px;color:var(--text2);margin-bottom:4px}
+.target-value{font-size:15px;font-weight:700}
+.risk-box{background:rgba(210,153,34,.06);border:1px solid rgba(210,153,34,.25);
+  border-radius:10px;padding:16px}
+.risk-box h4{color:var(--yellow);margin-bottom:10px;font-size:14px}
+.risk-box li{color:var(--text2);font-size:13px;margin-bottom:6px;padding-left:4px}
+.footer{text-align:center;color:var(--text2);font-size:12px;padding:20px;
+  border-top:1px solid var(--border);margin-top:20px}
+.data-badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;
+  background:rgba(88,166,255,.1);color:var(--blue);margin-left:6px}
+@media(max-width:700px){
+  .sentiment-grid{grid-template-columns:1fr}
+  .targets-row{grid-template-columns:1fr}
+  .index-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+.header{background:linear-gradient(135deg,#051a0a,#0a2d10)}
+.header .update-time{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.2);color:#3fb950}
+.session-badge{background:rgba(63,185,80,.15);border:1px solid rgba(63,185,80,.3);color:#3fb950}
+.icon-purple{background:rgba(188,140,255,.15)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="flag">🌙</div>
+  <h1>A股盘后复盘</h1>
+  <div class="subtitle">沪深两市 · 每个交易日 15:30 收盘复盘 · Powered by a-stock-monitor</div>
+  <div class="update-time">📅 2026-03-19 15:30</div><br>
+  <span class="session-badge">🌙 收盘复盘 + 明日策略</span>
+</div>
+<div class="container">
+  
+  <div class="card">
+    <div class="card-header"><div class="icon icon-green">📊</div>
+      <h2>今日收盘行情 <span class="data-badge">新浪财经·收盘</span></h2></div>
+    <div class="index-grid">
+        <div class="index-card">
+          <div class="index-name">上证综指</div>
+          <div class="index-price down">4,006.55</div>
+          <div class="index-chg down">-1.39%</div>
+          <div class="index-extra">
+            振幅 1.18% &nbsp;·&nbsp; 高 4042.02 &nbsp;·&nbsp; 低 3994.17
+          </div>
+        </div>
+        <div class="index-card">
+          <div class="index-name">深证成指</div>
+          <div class="index-price down">13,901.57</div>
+          <div class="index-chg down">-2.02%</div>
+          <div class="index-extra">
+            振幅 1.73% &nbsp;·&nbsp; 高 14098.69 &nbsp;·&nbsp; 低 13852.60
+          </div>
+        </div>
+        <div class="index-card">
+          <div class="index-name">沪深300</div>
+          <div class="index-price down">4,583.25</div>
+          <div class="index-chg down">-1.61%</div>
+          <div class="index-extra">
+            振幅 1.38% &nbsp;·&nbsp; 高 4634.55 &nbsp;·&nbsp; 低 4570.39
+          </div>
+        </div>
+        <div class="index-card">
+          <div class="index-name">上证50</div>
+          <div class="index-price down">2,916.23</div>
+          <div class="index-chg down">-1.53%</div>
+          <div class="index-extra">
+            振幅 1.15% &nbsp;·&nbsp; 高 2942.46 &nbsp;·&nbsp; 低 2908.44
+          </div>
+        </div>
+        <div class="index-card">
+          <div class="index-name">中证500</div>
+          <div class="index-price down">7,877.09</div>
+          <div class="index-chg down">-2.71%</div>
+          <div class="index-extra">
+            振幅 1.93% &nbsp;·&nbsp; 高 8000.43 &nbsp;·&nbsp; 低 7844.15
+          </div>
+        </div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="icon icon-blue">📋</div>
+      <h2>精选股票收盘复盘</h2></div>
+    <table class="data-table">
+      <thead><tr>
+        <th>股票</th><th>收盘价</th><th>涨跌幅</th><th>振幅</th>
+        <th>成交量</th><th>RSI(14)</th><th>MACD柱</th><th>距52W高</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><b>贵州茅台</b><br>
+            <span style="font-size:11px;color:var(--text2)">600519</span></td>
+          <td class="down"><b>¥1452.87</b></td>
+          <td class="down"><b>-1.08%</b></td>
+          <td class="up">1.84%</td>
+          <td style="color:var(--text2)">30319万手</td>
+          <td><span class="status status-info">49</span></td>
+          <td><span class="status status-success">↑ 3.926</span></td>
+          <td class="down">-8.4%</td>
+        </tr>
+        <tr>
+          <td><b>五粮液</b><br>
+            <span style="font-size:11px;color:var(--text2)">000858</span></td>
+          <td class="down"><b>¥102.53</b></td>
+          <td class="down"><b>-1.15%</b></td>
+          <td class="up">0.87%</td>
+          <td style="color:var(--text2)">114373万手</td>
+          <td><span class="status status-info">43</span></td>
+          <td><span class="status status-success">↑ 0.227</span></td>
+          <td class="down">-24.1%</td>
+        </tr>
+        <tr>
+          <td><b>中国平安</b><br>
+            <span style="font-size:11px;color:var(--text2)">601318</span></td>
+          <td class="down"><b>¥60.62</b></td>
+          <td class="down"><b>-2.05%</b></td>
+          <td class="up">1.44%</td>
+          <td style="color:var(--text2)">684722万手</td>
+          <td><span class="status status-info">37</span></td>
+          <td><span class="status status-danger">↓ -0.040</span></td>
+          <td class="down">-18.4%</td>
+        </tr>
+        <tr>
+          <td><b>招商银行</b><br>
+            <span style="font-size:11px;color:var(--text2)">600036</span></td>
+          <td class="down"><b>¥39.77</b></td>
+          <td class="down"><b>-0.38%</b></td>
+          <td class="up">0.85%</td>
+          <td style="color:var(--text2)">650247万手</td>
+          <td><span class="status status-info">63</span></td>
+          <td><span class="status status-success">↑ 0.120</span></td>
+          <td class="down">-12.1%</td>
+        </tr>
+        <tr>
+          <td><b>宁德时代</b><br>
+            <span style="font-size:11px;color:var(--text2)">300750</span></td>
+          <td class="down"><b>¥400.50</b></td>
+          <td class="down"><b>-0.38%</b></td>
+          <td class="up">3.48%</td>
+          <td style="color:var(--text2)">292866万手</td>
+          <td><span class="status status-success">超买 82</span></td>
+          <td><span class="status status-success">↑ 4.844</span></td>
+          <td class="down">-3.6%</td>
+        </tr>
+        <tr>
+          <td><b>比亚迪</b><br>
+            <span style="font-size:11px;color:var(--text2)">002594</span></td>
+          <td class="up"><b>¥102.31</b></td>
+          <td class="up"><b>+0.61%</b></td>
+          <td class="up">3.35%</td>
+          <td style="color:var(--text2)">531059万手</td>
+          <td><span class="status status-success">超买 73</span></td>
+          <td><span class="status status-success">↑ 0.867</span></td>
+          <td class="down">-23.5%</td>
+        </tr>
+        <tr>
+          <td><b>长江电力</b><br>
+            <span style="font-size:11px;color:var(--text2)">600900</span></td>
+          <td class="down"><b>¥27.26</b></td>
+          <td class="down"><b>-0.11%</b></td>
+          <td class="up">1.03%</td>
+          <td style="color:var(--text2)">1015258万手</td>
+          <td><span class="status status-success">超买 79</span></td>
+          <td><span class="status status-success">↑ 0.046</span></td>
+          <td class="down">-9.6%</td>
+        </tr>
+        <tr>
+          <td><b>中信证券</b><br>
+            <span style="font-size:11px;color:var(--text2)">600030</span></td>
+          <td class="down"><b>¥25.61</b></td>
+          <td class="down"><b>-1.39%</b></td>
+          <td class="up">1.31%</td>
+          <td style="color:var(--text2)">1071594万手</td>
+          <td><span class="status status-danger">超卖 27</span></td>
+          <td><span class="status status-danger">↓ -0.043</span></td>
+          <td class="down">-19.6%</td>
+        </tr>
+        <tr>
+          <td><b>美的集团</b><br>
+            <span style="font-size:11px;color:var(--text2)">000333</span></td>
+          <td class="down"><b>¥76.00</b></td>
+          <td class="down"><b>-1.38%</b></td>
+          <td class="up">1.36%</td>
+          <td style="color:var(--text2)">232729万手</td>
+          <td><span class="status status-info">34</span></td>
+          <td><span class="status status-danger">↓ -0.064</span></td>
+          <td class="down">-7.6%</td>
+        </tr>
+        <tr>
+          <td><b>中国中免</b><br>
+            <span style="font-size:11px;color:var(--text2)">601888</span></td>
+          <td class="down"><b>¥72.56</b></td>
+          <td class="down"><b>-3.20%</b></td>
+          <td class="up">2.45%</td>
+          <td style="color:var(--text2)">200314万手</td>
+          <td><span class="status status-danger">超卖 24</span></td>
+          <td><span class="status status-danger">↓ -0.081</span></td>
+          <td class="down">-25.3%</td>
+        </tr>
+        <tr>
+          <td><b>立讯精密</b><br>
+            <span style="font-size:11px;color:var(--text2)">002475</span></td>
+          <td class="down"><b>¥48.04</b></td>
+          <td class="down"><b>-2.63%</b></td>
+          <td class="up">1.93%</td>
+          <td style="color:var(--text2)">918059万手</td>
+          <td><span class="status status-info">41</span></td>
+          <td><span class="status status-success">↑ 0.265</span></td>
+          <td class="down">-31.4%</td>
+        </tr></tbody>
+    </table>
+  </div>
+  
+  <div class="card">
+    <div class="card-header"><div class="icon icon-red">🏆</div>
+      <h2>今日涨跌排行（精选股池）</h2></div>
+    <div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:8px">📈 今日涨幅前三</div>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>股票</th><th>收盘价</th><th>涨跌幅</th><th>盘中数据</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;color:#ffd700">🥇</td>
+          <td><b>比亚迪</b><br>
+            <span style="font-size:11px;color:var(--text2)">002594</span></td>
+          <td class="up"><b>¥102.31</b></td>
+          <td class="up"><b>+0.61%</b>
+            <div style="background:rgba(255,255,255,.08);border-radius:3px;height:4px;margin-top:3px;width:120px">
+              <div style="width:12%;background:#f85149;height:4px;border-radius:3px"></div>
+            </div>
+          </td>
+          <td style="color:var(--text2);font-size:12px">开100.99 高103.88 低100.47</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#ffd700">🥈</td>
+          <td><b>长江电力</b><br>
+            <span style="font-size:11px;color:var(--text2)">600900</span></td>
+          <td class="down"><b>¥27.26</b></td>
+          <td class="down"><b>-0.11%</b>
+            <div style="background:rgba(255,255,255,.08);border-radius:3px;height:4px;margin-top:3px;width:120px">
+              <div style="width:2%;background:#3fb950;height:4px;border-radius:3px"></div>
+            </div>
+          </td>
+          <td style="color:var(--text2);font-size:12px">开27.27 高27.48 低27.20</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#ffd700">🥉</td>
+          <td><b>招商银行</b><br>
+            <span style="font-size:11px;color:var(--text2)">600036</span></td>
+          <td class="down"><b>¥39.77</b></td>
+          <td class="down"><b>-0.38%</b>
+            <div style="background:rgba(255,255,255,.08);border-radius:3px;height:4px;margin-top:3px;width:120px">
+              <div style="width:8%;background:#3fb950;height:4px;border-radius:3px"></div>
+            </div>
+          </td>
+          <td style="color:var(--text2);font-size:12px">开39.88 高40.04 低39.70</td>
+        </tr></tbody>
+    </table>
+    <div style="font-size:13px;font-weight:600;color:var(--green);margin:16px 0 8px">📉 今日跌幅前三</div>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>股票</th><th>收盘价</th><th>涨跌幅</th><th>盘中数据</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;color:var(--text2)">↓1</td>
+          <td><b>中国平安</b><br>
+            <span style="font-size:11px;color:var(--text2)">601318</span></td>
+          <td class="down"><b>¥60.62</b></td>
+          <td class="down"><b>-2.05%</b>
+            <div style="background:rgba(255,255,255,.08);border-radius:3px;height:4px;margin-top:3px;width:120px">
+              <div style="width:41%;background:#3fb950;height:4px;border-radius:3px"></div>
+            </div>
+          </td>
+          <td style="color:var(--text2);font-size:12px">开61.20 高61.29 低60.40</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--text2)">↓2</td>
+          <td><b>立讯精密</b><br>
+            <span style="font-size:11px;color:var(--text2)">002475</span></td>
+          <td class="down"><b>¥48.04</b></td>
+          <td class="down"><b>-2.63%</b>
+            <div style="background:rgba(255,255,255,.08);border-radius:3px;height:4px;margin-top:3px;width:120px">
+              <div style="width:53%;background:#3fb950;height:4px;border-radius:3px"></div>
+            </div>
+          </td>
+          <td style="color:var(--text2);font-size:12px">开48.38 高48.80 低47.85</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--text2)">↓3</td>
+          <td><b>中国中免</b><br>
+            <span style="font-size:11px;color:var(--text2)">601888</span></td>
+          <td class="down"><b>¥72.56</b></td>
+          <td class="down"><b>-3.20%</b>
+            <div style="background:rgba(255,255,255,.08);border-radius:3px;height:4px;margin-top:3px;width:120px">
+              <div style="width:64%;background:#3fb950;height:4px;border-radius:3px"></div>
+            </div>
+          </td>
+          <td style="color:var(--text2);font-size:12px">开74.00 高74.20 低72.36</td>
+        </tr></tbody>
+    </table>
+  </div>
+  
+  <div class="card">
+    <div class="card-header"><div class="icon icon-purple">📝</div>
+      <h2>今日收盘复盘小结</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:16px">
+      <div class="stat-item"><div class="stat-label">精选股上涨/下跌</div>
+        <div class="stat-value"><span class="up">1</span> / <span class="down">10</span></div></div>
+      <div class="stat-item"><div class="stat-label">精选股平均涨跌</div>
+        <div class="stat-value down">-1.19%</div></div>
+      <div class="stat-item"><div class="stat-label">全市场情绪评分</div>
+        <div class="stat-value" style="color:#ffd54f">50分 😐</div></div>
+      <div class="stat-item"><div class="stat-label">全市场涨停/跌停</div>
+        <div class="stat-value"><span class="up">0</span> /
+          <span class="down">0</span></div></div>
+    </div>
+    <div style="background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.15);
+      border-radius:10px;padding:16px">
+      <div style="font-size:13px;font-weight:600;color:var(--blue);margin-bottom:8px">💡 今日市场小结</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8">今日市场整体偏弱，多数个股下跌，谨慎操作。
+        全市场 0 只股票中，
+        上涨 0 只（0.0%），
+        下跌 0 只，
+        平均涨跌幅 +0.00%。
+        明日操作建议参考下方选股推荐，严格止损。
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <div class="icon icon-yellow">🌡️</div>
+      <h2>全市场情绪 <span class="data-badge">实时数据</span></h2>
+    </div>
+    <div class="sentiment-grid">
+      <div style="text-align:center;padding:20px">
+        <div style="position:relative;width:140px;height:140px;margin:0 auto">
+          <svg viewBox="0 0 140 140" style="width:140px;height:140px;transform:rotate(-90deg)">
+            <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="12"/>
+            <circle cx="70" cy="70" r="58" fill="none" stroke="#ffd54f" stroke-width="12"
+              stroke-dasharray="182 364.4" stroke-linecap="round"/>
+          </svg>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+            <div style="font-size:36px;font-weight:700;color:#ffd54f">50</div>
+            <div style="font-size:20px">😐</div>
+          </div>
+        </div>
+        <div style="font-size:18px;font-weight:600;color:#ffd54f;margin-top:8px">中性</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:6px">暂无数据</div>
+      </div>
+      <div class="sentiment-stats">
+        <div class="stat-item"><div class="stat-label">全市场股票数</div>
+          <div class="stat-value">0</div></div>
+        <div class="stat-item"><div class="stat-label">上涨 / 下跌 / 平</div>
+          <div class="stat-value"><span class="up">0</span> /
+          <span class="down">0</span> /
+          <span class="neutral">0</span></div></div>
+        <div class="stat-item"><div class="stat-label">涨停 / 跌停</div>
+          <div class="stat-value"><span class="up">0</span> /
+          <span class="down">0</span></div></div>
+        <div class="stat-item"><div class="stat-label">上涨比例</div>
+          <div class="stat-value" style="color:#f85149">0.0%</div></div>
+        <div class="stat-item"><div class="stat-label">平均涨跌幅</div>
+          <div class="stat-value neutral">+0.00%</div></div>
+        <div class="stat-item"><div class="stat-label">强势股 / 弱势股</div>
+          <div class="stat-value"><span class="up">0</span> /
+          <span class="down">0</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="icon icon-red">📅</div>
+      <h2>明日选股策略</h2></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:4px">
+      基于今日收盘数据重新筛选，供明日开盘参考
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header"><div class="icon icon-red">📈</div>
+      <h2>中长线选股推荐 <span class="data-badge">a-stock-monitor</span></h2></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px">
+      趋势+动量+量能+资金多维评分，持仓建议 1-4 周</div>
+    
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-1">🥇</div>
+        <div><div class="pick-name">比亚迪</div>
+          <div class="pick-code">002594 · 沪深A股</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="down">¥93.64</div>
+          <div style="font-size:13px" class="down">-0.88%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">A+</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#f85149">92</div>
+          <div style="font-size:11px;color:var(--text2)">评分/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:92%;background:#f85149;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">价格>MA20(96.13)</span><span class="signal-tag signal-buy">价格>MA60(94.97)</span><span class="signal-tag signal-buy">MA20>MA60(多头排列)</span><span class="signal-tag signal-buy">20日涨幅+12.2%</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">趋势评级</div>
+          <div class="metric-value">强势上涨</div></div>
+        <div class="metric-item"><div class="metric-label">5日涨跌</div>
+          <div class="metric-value up">+3.24%</div></div>
+        <div class="metric-item"><div class="metric-label">20日涨跌</div>
+          <div class="metric-value up">+10.87%</div></div>
+        <div class="metric-item"><div class="metric-label">MA20</div>
+          <div class="metric-value">¥96.13</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">0.87x</div></div>
+        <div class="metric-item"><div class="metric-label">ADX强度</div>
+          <div class="metric-value">50.4</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">💚 买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥91.77~¥93.64</div></div>
+        <div class="target-box"><div class="target-label">🎯 中线目标</div>
+          <div class="target-value" style="color:#f85149">¥104.88</div></div>
+        <div class="target-box"><div class="target-label">🛑 止损参考</div>
+          <div class="target-value" style="color:#8b949e">≤¥88.96</div></div>
+      </div>
+    </div>
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-2">🥈</div>
+        <div><div class="pick-name">中国核电</div>
+          <div class="pick-code">601985 · 沪深A股</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="up">¥8.82</div>
+          <div style="font-size:13px" class="up">+0.46%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">A</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#f85149">85</div>
+          <div style="font-size:11px;color:var(--text2)">评分/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:85%;background:#f85149;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">价格>MA20(8.79)</span><span class="signal-tag signal-buy">价格>MA60(8.77)</span><span class="signal-tag signal-buy">MA20>MA60(多头排列)</span><span class="signal-tag signal-buy">20日涨幅+3.3%</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">趋势评级</div>
+          <div class="metric-value">强势上涨</div></div>
+        <div class="metric-item"><div class="metric-label">5日涨跌</div>
+          <div class="metric-value down">-3.38%</div></div>
+        <div class="metric-item"><div class="metric-label">20日涨跌</div>
+          <div class="metric-value up">+3.15%</div></div>
+        <div class="metric-item"><div class="metric-label">MA20</div>
+          <div class="metric-value">¥8.79</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">0.83x</div></div>
+        <div class="metric-item"><div class="metric-label">ADX强度</div>
+          <div class="metric-value">36.0</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">💚 买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥8.64~¥8.82</div></div>
+        <div class="target-box"><div class="target-label">🎯 中线目标</div>
+          <div class="target-value" style="color:#f85149">¥9.88</div></div>
+        <div class="target-box"><div class="target-label">🛑 止损参考</div>
+          <div class="target-value" style="color:#8b949e">≤¥8.38</div></div>
+      </div>
+    </div>
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-3">🥉</div>
+        <div><div class="pick-name">招商银行</div>
+          <div class="pick-code">600036 · 沪深A股</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="neutral">¥39.15</div>
+          <div style="font-size:13px" class="neutral">+0.00%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">A</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#f85149">82</div>
+          <div style="font-size:11px;color:var(--text2)">评分/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:82%;background:#f85149;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">价格>MA20(39.21)</span><span class="signal-tag signal-buy">价格>MA60(39.54)</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">趋势评级</div>
+          <div class="metric-value">震荡整理</div></div>
+        <div class="metric-item"><div class="metric-label">5日涨跌</div>
+          <div class="metric-value up">+0.68%</div></div>
+        <div class="metric-item"><div class="metric-label">20日涨跌</div>
+          <div class="metric-value up">+0.94%</div></div>
+        <div class="metric-item"><div class="metric-label">MA20</div>
+          <div class="metric-value">¥39.21</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">0.89x</div></div>
+        <div class="metric-item"><div class="metric-label">ADX强度</div>
+          <div class="metric-value">27.6</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">💚 买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥38.37~¥39.15</div></div>
+        <div class="target-box"><div class="target-label">🎯 中线目标</div>
+          <div class="target-value" style="color:#f85149">¥43.85</div></div>
+        <div class="target-box"><div class="target-label">🛑 止损参考</div>
+          <div class="target-value" style="color:#8b949e">≤¥37.19</div></div>
+      </div>
+    </div>
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-n">#4</div>
+        <div><div class="pick-name">长江电力</div>
+          <div class="pick-code">600900 · 沪深A股</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="up">¥27.13</div>
+          <div style="font-size:13px" class="up">+0.18%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">A</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#f85149">80</div>
+          <div style="font-size:11px;color:var(--text2)">评分/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:80%;background:#f85149;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">价格>MA20(26.85)</span><span class="signal-tag signal-buy">价格>MA60(26.76)</span><span class="signal-tag signal-buy">MA20>MA60(多头排列)</span><span class="signal-tag signal-buy">20日涨幅+4.4%</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">趋势评级</div>
+          <div class="metric-value">强势上涨</div></div>
+        <div class="metric-item"><div class="metric-label">5日涨跌</div>
+          <div class="metric-value down">-0.87%</div></div>
+        <div class="metric-item"><div class="metric-label">20日涨跌</div>
+          <div class="metric-value up">+3.77%</div></div>
+        <div class="metric-item"><div class="metric-label">MA20</div>
+          <div class="metric-value">¥26.85</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">0.91x</div></div>
+        <div class="metric-item"><div class="metric-label">ADX强度</div>
+          <div class="metric-value">45.1</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">💚 买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥26.59~¥27.13</div></div>
+        <div class="target-box"><div class="target-label">🎯 中线目标</div>
+          <div class="target-value" style="color:#f85149">¥30.39</div></div>
+        <div class="target-box"><div class="target-label">🛑 止损参考</div>
+          <div class="target-value" style="color:#8b949e">≤¥25.77</div></div>
+      </div>
+    </div>
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-n">#5</div>
+        <div><div class="pick-name">三峡能源</div>
+          <div class="pick-code">600905 · 沪深A股</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="up">¥4.27</div>
+          <div style="font-size:13px" class="up">+0.47%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">A</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#f85149">80</div>
+          <div style="font-size:11px;color:var(--text2)">评分/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:80%;background:#f85149;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">价格>MA20(4.26)</span><span class="signal-tag signal-buy">价格>MA60(4.17)</span><span class="signal-tag signal-buy">MA20>MA60(多头排列)</span><span class="signal-tag signal-buy">20日涨幅+5.6%</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">趋势评级</div>
+          <div class="metric-value">强势上涨</div></div>
+        <div class="metric-item"><div class="metric-label">5日涨跌</div>
+          <div class="metric-value down">-3.79%</div></div>
+        <div class="metric-item"><div class="metric-label">20日涨跌</div>
+          <div class="metric-value up">+5.37%</div></div>
+        <div class="metric-item"><div class="metric-label">MA20</div>
+          <div class="metric-value">¥4.26</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">0.94x</div></div>
+        <div class="metric-item"><div class="metric-label">ADX强度</div>
+          <div class="metric-value">37.7</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">💚 买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥4.18~¥4.27</div></div>
+        <div class="target-box"><div class="target-label">🎯 中线目标</div>
+          <div class="target-value" style="color:#f85149">¥4.78</div></div>
+        <div class="target-box"><div class="target-label">🛑 止损参考</div>
+          <div class="target-value" style="color:#8b949e">≤¥4.06</div></div>
+      </div>
+    </div></div>
+  
+  <div class="card">
+    <div class="card-header"><div class="icon icon-green">⚡</div>
+      <h2>短线选股推荐 <span class="data-badge">a-stock-monitor</span></h2></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px">
+      RSI/KDJ/MACD/布林带多指标共振+量价异动，持仓建议 1-3 天，严格止损</div>
+    
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-1">🥇</div>
+        <div><div class="pick-name">万华化学</div>
+          <div class="pick-code">600309 · 短线 1-3天</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="up">¥92.99</div>
+          <div style="font-size:13px" class="up">+4.25%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">B</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#3fb950">50</div>
+          <div style="font-size:11px;color:var(--text2)">信号/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:50%;background:#ffd54f;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">RSI超卖 (27)</span><span class="signal-tag signal-buy">KDJ超卖 (J=-4)</span><span class="signal-tag signal-buy">布林下轨反弹 (位置2%)</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">RSI(14)</div>
+          <div class="metric-value">26.7</div></div>
+        <div class="metric-item"><div class="metric-label">KDJ-K</div>
+          <div class="metric-value">10.2</div></div>
+        <div class="metric-item"><div class="metric-label">MACD柱</div>
+          <div class="metric-value neutral">0.0000</div></div>
+        <div class="metric-item"><div class="metric-label">布林带位置</div>
+          <div class="metric-value">50%</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">1.00x</div></div>
+        <div class="metric-item"><div class="metric-label">盈亏比</div>
+          <div class="metric-value" style="color:#ffd54f">1.5:1</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">⚡ 短线买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥92.99</div></div>
+        <div class="target-box"><div class="target-label">🎯 短线目标</div>
+          <div class="target-value" style="color:#f85149">¥105.54 (+13.5%)</div></div>
+        <div class="target-box"><div class="target-label">🛑 ATR止损</div>
+          <div class="target-value" style="color:#8b949e">¥84.62 (-9.0%)</div></div>
+      </div>
+    </div>
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-2">🥈</div>
+        <div><div class="pick-name">中信证券</div>
+          <div class="pick-code">600030 · 短线 1-3天</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="up">¥26.43</div>
+          <div style="font-size:13px" class="up">+0.84%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">C</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#3fb950">36</div>
+          <div style="font-size:11px;color:var(--text2)">信号/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:36%;background:#8899aa;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">RSI超卖 (27)</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">RSI(14)</div>
+          <div class="metric-value">26.7</div></div>
+        <div class="metric-item"><div class="metric-label">KDJ-K</div>
+          <div class="metric-value">28.8</div></div>
+        <div class="metric-item"><div class="metric-label">MACD柱</div>
+          <div class="metric-value neutral">0.0000</div></div>
+        <div class="metric-item"><div class="metric-label">布林带位置</div>
+          <div class="metric-value">50%</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">1.00x</div></div>
+        <div class="metric-item"><div class="metric-label">盈亏比</div>
+          <div class="metric-value" style="color:#ffd54f">1.5:1</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">⚡ 短线买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥26.43</div></div>
+        <div class="target-box"><div class="target-label">🎯 短线目标</div>
+          <div class="target-value" style="color:#f85149">¥27.91 (+5.6%)</div></div>
+        <div class="target-box"><div class="target-label">🛑 ATR止损</div>
+          <div class="target-value" style="color:#8b949e">¥25.44 (-3.7%)</div></div>
+      </div>
+    </div>
+    <div class="pick-card">
+      <div class="pick-header">
+        <div class="pick-rank pick-rank-3">🥉</div>
+        <div><div class="pick-name">中国中免</div>
+          <div class="pick-code">601888 · 短线 1-3天</div></div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:20px;font-weight:700" class="up">¥76.66</div>
+          <div style="font-size:13px" class="up">+0.27%</div>
+        </div>
+        <div style="margin-left:8px"><span style="background:#58a6ff22;color:#58a6ff;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600">C</span></div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:700;color:#3fb950">36</div>
+          <div style="font-size:11px;color:var(--text2)">信号/100</div><div style="background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-top:4px"><div style="width:36%;background:#8899aa;height:6px;border-radius:4px"></div></div></div>
+      </div>
+      <div class="signals-row"><span class="signal-tag signal-buy">RSI超卖 (24)</span><span class="signal-tag signal-sell">MACD死叉 (DIF=-4.194)</span></div>
+      <div class="pick-metrics">
+        <div class="metric-item"><div class="metric-label">RSI(14)</div>
+          <div class="metric-value">23.5</div></div>
+        <div class="metric-item"><div class="metric-label">KDJ-K</div>
+          <div class="metric-value">26.3</div></div>
+        <div class="metric-item"><div class="metric-label">MACD柱</div>
+          <div class="metric-value neutral">0.0000</div></div>
+        <div class="metric-item"><div class="metric-label">布林带位置</div>
+          <div class="metric-value">50%</div></div>
+        <div class="metric-item"><div class="metric-label">量比</div>
+          <div class="metric-value">1.00x</div></div>
+        <div class="metric-item"><div class="metric-label">盈亏比</div>
+          <div class="metric-value" style="color:#ffd54f">1.5:1</div></div>
+      </div>
+      <div class="targets-row">
+        <div class="target-box"><div class="target-label">⚡ 短线买入参考</div>
+          <div class="target-value" style="color:#3fb950">¥76.66</div></div>
+        <div class="target-box"><div class="target-label">🎯 短线目标</div>
+          <div class="target-value" style="color:#f85149">¥82.70 (+7.9%)</div></div>
+        <div class="target-box"><div class="target-label">🛑 ATR止损</div>
+          <div class="target-value" style="color:#8b949e">¥72.63 (-5.2%)</div></div>
+      </div>
+    </div></div>
+  
+  <div class="card">
+    <div class="risk-box">
+      <h4>⚠️ 风险提示</h4>
+      <ul>
+        <li>本报告选股基于技术指标，不含基本面分析，不构成任何投资建议</li>
+        <li>A股实行T+1制度，当日买入次日方可卖出，请注意流动性风险</li>
+        <li>短线操作须严格执行止损，建议单笔仓位不超过总资金的 10%-20%</li>
+        <li>市场情绪数据基于最新收盘数据，盘中仅供参考</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <p>报告生成时间：2026-03-19 15:30 | 数据来源：新浪财经收盘 + 腾讯财经K线 + a-stock-monitor</p>
+  <p style="margin-top:6px">免责声明：本报告仅供参考，不构成任何投资建议。股市有风险，投资需谨慎。</p>
+</div>
+</body>
+</html>
